@@ -13,8 +13,8 @@ const conn = "mongodb+srv://vivekyadav:1q2w3e4r5t@cluster0.35i0hyy.mongodb.net/D
 mongoose.set('strictQuery', false); // to not show warning
 
 mongoose.connect(conn).then(() => {
-  console.log("Connection Succesful");
-}).catch((err) => console.log(`Connection Failed ...${err}`));
+  console.log("Database Connection Succesful");
+}).catch((err) => console.log(`Database Connection Failed ...${err}`));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
