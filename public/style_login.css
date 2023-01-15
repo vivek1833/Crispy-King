@@ -1,0 +1,213 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:300);
+
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  font-family: Okra, Helvetica, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  box-sizing: border-box;
+  font-size: 62.5%;
+}
+
+body {
+  background-image: url("https://res.cloudinary.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,h_1340/Lunch1_vlksgq");
+  background-size: cover;
+  background-position: bottom;
+  height: 100%;
+  overflow-x: hidden;
+}
+
+.lgnbtn {
+  color: black;
+  background-color: #FFFFFF;
+  border: none;
+  border-radius: 0.4rem;
+  font-size: 1.65rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  float: right;
+  margin-top: 1rem;
+  vertical-align: middle;
+  line-height: 1;
+}
+
+.lgnbtn a {
+  text-decoration: none;
+  color: #000000;
+}
+
+#h1 {
+  color: #000000;
+  font-size: 3.2rem;
+  font-weight: 600;
+  margin-bottom: 2.5rem;
+  text-align: center;
+  float: left;
+}
+
+.login-page {
+  max-width: 38rem;
+  padding: 8% 0 0;
+  margin: auto;
+}
+
+.form {
+  position: relative;
+  z-index: 1;
+  background: #FFFFFF;
+  max-width: 360px;
+  margin: 0 auto 100px;
+  padding: 45px;
+  text-align: center;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+
+@media (max-width: 40rem) {
+  .login-page {
+    font-size: 2.5rem;
+    margin-top: 0rem;
+    margin-bottom: 0rem;
+    padding: 0rem;
+  }
+
+  .form {
+    margin: 0;
+  }
+}
+
+.form input {
+  font-family: "Roboto", sans-serif;
+  outline: 0;
+  background: #f2f2f2;
+  width: 100%;
+  border-radius: 0.4rem;
+  border: 0;
+  margin: 0 0 15px;
+  padding: 15px;
+  box-sizing: border-box;
+  font-size: 14px;
+  line-height: 2.5rem;
+}
+
+.form input:focus {
+  background-color: #e0e0e0;
+}
+
+/* placeholder goes upwards */
+.form input:focus::-webkit-input-placeholder {
+  font-size: 1rem;
+  font-weight: 500;
+  transform: translateY(-2rem);
+  transition: all 0.1s ease;
+}
+
+input[required] {
+  background-image: radial-gradient(#F00 20%, transparent 16%), radial-gradient(#F00 15%, transparent 16%);
+  background-size: 1.5rem 1.5rem;
+  background-position: right top;
+  background-repeat: no-repeat;
+}
+
+#x {
+  font-size: 1.35rem;
+  color: #ff0000;
+  float: left;
+  margin-right: 0.2rem;
+}
+
+.reqmsg {
+  font-size: 1rem;
+  font-weight: 300;
+  color: #000000;
+  margin-top: -1.3rem;
+  text-align: center;
+  float: left;
+  letter-spacing: 0.1rem;
+}
+
+.login-form button {
+  font-family: "Roboto", sans-serif;
+  text-transform: uppercase;
+  outline: 0;
+  background: #000000;
+  width: 100%;
+  border-radius: 0.4rem;
+  border: 0;
+  padding: 15px;
+  color: #FFFFFF;
+  font-size: 14px;
+  -webkit-transition: all 0.3 ease;
+  transition: all 0.3 ease;
+  cursor: pointer;
+}
+
+.login-form button:hover,
+.login-form button:active,
+.login-form button:focus {
+  background: #424242;
+}
+
+.form .message {
+  margin: 15px 0 0;
+  color: #b3b3b3;
+  font-size: 12px;
+}
+
+.form .message a {
+  color: #000000;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-decoration: none;
+}
+
+/* Footer */
+.footer {
+  background-color: #000000;
+  color: #ffffff;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding-top: 5rem;
+  gap: 10rem;
+  font-size: 1.6rem;
+}
+
+.footer1 h3 {
+  font-size: 1.4rem;
+  letter-spacing: 0.15rem;
+  text-transform: uppercase;
+  font-weight: 500;
+  margin: 0 0 1.2rem;
+  box-sizing: inherit;
+}
+
+.footer1 ul li {
+  list-style: none;
+}
+
+.footer a {
+  font-weight: 300;
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 1.4rem;
+  line-height: 2.1rem;
+  margin: 0 0 0.5rem 0;
+}
+
+.footer a:hover {
+  color: #0082e6;
+}
+
+.footer p {
+  font-size: 1.3rem;
+  color: rgb(79, 79, 79);
+  line-height: 1.7rem;
+  font-weight: 300;
+  padding-bottom: 3rem;
+}

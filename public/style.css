@@ -1,0 +1,402 @@
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  font-family: Okra, Helvetica, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  box-sizing: border-box;
+  font-size: 62.5%;
+  overflow-x: hidden;
+}
+
+body {
+  height: 100%;
+  font-size: 100%;
+}
+
+/* navbar */
+nav {
+  background-image: url("https://b.zmtcdn.com/web_assets/81f3ff974d82520780078ba1cfbd453a1583259680.png");
+  background-size: cover;
+  background-position: center;
+  height: 42rem;
+  width: 100%;
+}
+
+nav h1 {
+  color: rgb(255, 255, 255);
+  font-weight: 1000;
+  font-size: 7.5rem;
+  text-align: center;
+  padding-top: 5rem;
+}
+
+nav h2 {
+  color: white;
+  font-size: 3.5rem;
+  margin-top: 2rem;
+  font-weight: 300;
+  text-align: center;
+}
+
+@media screen and (max-width: 480px) {
+  nav {
+    height: 45rem;
+  }
+
+  nav h1 {
+    padding-top: 15rem;
+    font-size: 5rem;
+  }
+
+  nav h2 {
+    font-size: 2rem;
+    font-weight: 500;
+  }
+}
+
+nav ul {
+  display: flex;
+  justify-content: right;
+}
+
+nav ul li {
+  list-style: none;
+  margin: 1rem 2rem 0 1rem;
+  /*top right bottom left*/
+}
+
+nav ul li a {
+  color: white;
+  font-size: 2.3rem;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+nav ul li a:hover {
+  color: grey;
+}
+
+/*Responsive Navbar*/
+.checkbtn {
+  font-size: 30px;
+  color: white;
+  float: left;
+  line-height: 80px;
+  margin-left: 15px;
+  cursor: pointer;
+  display: none;
+}
+
+#check {
+  display: none;
+}
+
+@media (max-width: 35rem) {
+  label.logo {
+    font-size: 30px;
+    padding-left: 50px;
+  }
+
+  nav ul li a {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 40rem) {
+  .checkbtn {
+    display: block;
+  }
+
+  nav ul {
+    position: fixed;
+    width: 70%;
+    height: 100%;
+    background: rgb(255, 255, 255);
+    top: 6rem;
+    left: -100%;
+    text-align: center;
+    transition: all .5s;
+    display: flex;
+    justify-content: right;
+    flex-direction: column;
+  }
+
+  nav ul li {
+    margin: 0 1rem 0 0;
+    /*top right bottom left*/
+    line-height: 5rem;
+  }
+
+  nav ul li a {
+    font-size: 2rem;
+    color: rgb(0, 0, 0);
+  }
+
+  a:hover,
+  a.active {
+    background: none;
+    color: #0082e6;
+  }
+
+  #check:checked~ul {
+    left: 0;
+  }
+}
+
+/* searchbox */
+.searchbox {
+  margin-top: 1.5rem;
+  text-align: center;
+}
+
+input[type="text"] {
+  padding: 1rem;
+  height: 3rem;
+  margin-top: 2rem;
+  font-size: 1.8rem;
+  border-radius: 1.2rem;
+  width: 45%;
+  border: none;
+  outline: none;
+}
+
+input[placeholder] {
+  font-size: 1.8rem;
+}
+
+@media (max-width: 60rem) {
+  input[type="text"] {
+    width: 80%;
+  }
+}
+
+/* cards */
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 5rem;
+  gap: 5rem;
+}
+
+.card {
+  margin: 2rem 2.2rem 1rem 0;
+  padding-bottom: 12rem;
+  width: 30rem;
+  height: 20rem;
+  border-radius: 1.2rem;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
+  transition: all 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-0.5rem);
+  box-shadow: 0 1rem 2rem rgb(0, 0, 0, 1);
+}
+
+.card h2 {
+  font-size: 2.5rem;
+  text-align: center;
+}
+
+.card img {
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  /*Adjust Image*/
+  border-radius: 1.2rem 1.2rem 0 0;
+}
+
+.card button {
+  font-size: 2rem;
+  text-align: center;
+  background-color: #ffffff;
+  padding: 1rem 0 1rem 0;
+  /*top right bottom left */
+  border-radius: 1rem;
+  transition: all 0.4s;
+  width: 100%;
+  margin-top: 8.1rem;
+}
+
+.card button:hover {
+  background-color: rgb(1, 0, 0);
+  transform: translateY(-0.5rem);
+  color: aliceblue;
+}
+
+.card button a {
+  color: rgb(0, 173, 14);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.card h3 {
+  text-align: center;
+  padding-top: 0.2rem;
+  padding-bottom: 0.2rem;
+}
+
+.content {
+  display: flex;
+  flex-direction: row;
+  padding: 0 2rem 0 2rem;
+  gap: 3rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Deails of cards*/
+.faded_detail {
+  font-size: 11px;
+  font-weight: 300;
+  line-height: 1.5;
+  color: rgb(105, 105, 105);
+  margin-left: 2rem;
+}
+
+.star {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: aliceblue;
+  background: green;
+  padding: 0 0.45rem 0 0.45rem;
+  border-radius: 0.5rem;
+  width: fit-content;
+  line-height: normal;
+}
+
+#🎇 {
+  color: yellow;
+}
+
+.discount {
+  font-size: 1.4rem;
+  line-height: 2rem;
+  width: fit-content;
+  background: rgb(37, 111, 239);
+  color: #ffffff;
+  font-weight: 400;
+  border-radius: 0 0.2rem 0.2rem 0;
+  padding: 0 0.5rem 0 0.5rem;
+  position: relative;
+  margin-top: -10rem;
+}
+
+/*ABOUT US */
+.heading {
+  text-align: center;
+  font-size: 5rem;
+  margin-top: 10rem;
+  background: -webkit-linear-gradient(#8c00ff, #ff00f2);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.person {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5rem;
+}
+
+/* text appears on hovering image */
+.overlay {
+  position: relative;
+  border-radius: 1.2rem;
+  margin-top: 3rem;
+
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.overlay img {
+  height: 25rem;
+  width: 100%;
+  object-fit: fill;
+  border-radius: 1.2rem;
+}
+
+.text {
+  color: black;
+  width: 35rem;
+  font-size: 2rem;
+  font-weight: 500;
+  position: absolute;
+  top: 75%;
+  left: 95%;
+  transform: translate(-100%, -50%);
+  text-align: justify;
+  visibility: hidden;
+  border-radius: 1.2rem;
+  font-style: italic;
+  font-family: cursive;
+}
+
+.overlay:hover .text {
+  visibility: visible;
+  opacity: 1;
+  transition: all 0.5s;
+  cursor: pointer;
+}
+
+.overlay:hover img {
+  cursor: pointer;
+  transition: all 0.5s;
+  opacity: 0.3;
+}
+
+/* footer  */
+.footer {
+  background-color: #000000;
+  color: #ffffff;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5rem;
+  padding-top: 5rem;
+  gap: 10rem;
+  font-size: 1.6rem;
+}
+
+.footer1 h3 {
+  font-size: 1.4rem;
+  letter-spacing: 0.15rem;
+  text-transform: uppercase;
+  font-weight: 500;
+  margin: 0 0 1.2rem;
+  box-sizing: inherit;
+}
+
+.footer1 ul li {
+  list-style: none;
+}
+
+.footer a {
+  font-weight: 300;
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 1.4rem;
+  line-height: 2.1rem;
+  margin: 0 0 0.5rem 0;
+}
+
+.footer a:hover {
+  color: #0082e6;
+}
+
+.footer p {
+  font-size: 1.3rem;
+  color: rgb(79, 79, 79);
+  line-height: 1.7rem;
+  font-weight: 300;
+  padding-bottom: 3rem;
+}
