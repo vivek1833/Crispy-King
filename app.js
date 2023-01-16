@@ -7,6 +7,7 @@ const app = express();
 const port = process.env.PORT || 8000;
 
 const Register = require('./models/register');
+const { title } = require("process");
 const conn = "mongodb+srv://vivekyadav:1q2w3e4r5t@cluster0.35i0hyy.mongodb.net/DB?retryWrites=true&w=majority";
 // Instead of DB write database_Name
 
@@ -24,7 +25,7 @@ app.set("views", path.join(__dirname, "./templates/views/"));
 hbs.registerPartials(path.join(__dirname, "./templates/partials/"));
 
 app.get("", (req, res) => {
-  res.render("index");
+  res.render("index", { title: "" });
 });
 
 app.get("/login", (req, res) => {
@@ -51,9 +52,9 @@ app.post("/register", async (req, res) => {
         password: password,
       })
       const registered = await user.save();
-      res.status(201).render("index");
+      res.status(201).render("index", {user :""});
     } else {
-      res.send("Password are not matching");
+      res.render("signup", { title: "Password not matching" });
     }
   } catch (err) {
     res.status(400).send(err);
@@ -68,12 +69,12 @@ app.post("/login", async (req, res) => {
 
     const useremail = await Register.findOne({ username: username });
     if (useremail.password === password) {
-      res.status(201).render("index");
+      res.status(201).render("index", { user: "" });
     } else {
-      res.status(400).render("alert");
+      res.status(400).render("login", { title: "Invalid Credentials" });
     }
   } catch (error) {
-    res.status(400).render("alert");
+    res.status(400).render("login", { title: "Invalid Credentials" });
   }
 })
 

@@ -4,9 +4,16 @@
 {{>loginHeader}}
 
 <body>
+
     <!-- login form  -->
     <div class="login-page">
         <div class="form">
+            <div>
+                {{#if title}}
+                <p id="error">{{title}}</p>
+                {{/if}}
+            </div>
+
             <h1 id="h1">Sign In</h1>
             <button class="lgnbtn">
                 <a href="/"> <b> X </b> </a>
