@@ -14,15 +14,18 @@
       <li><a href="/">Home</a></li>
       <li><a href="#about">About</a></li>
       <li><a href="#contact">Conact Us</a></li>
+      {{#if user}}
+      <li><a href="/logout">LogOut</a></li>
+      {{else}}
       <li><a href="/login">LogIn</a></li>
-      <li><a href="/signup">SignUp</a></li>
+      {{/if}}
       <div>
       </div>
     </ul>
 
     <h1> <i> Crispy King </i> </h1>
     <h2>Discover the best food & drinks in Mamupur</h2>
-    <form class="searchbox">
+    <form class="searchbox" action="/search" method="post">
       <input style="border: none" type="text" placeholder="Search for your favourite food" name="search"
         autocomplete="off">
     </form>
@@ -30,150 +33,38 @@
 
   <!-- cards -->
   <div class="cards">
+    {{#if food}}
+    {{#each food}}
     <div class="card">
-      <img src="/images/food1.jpg" alt="image">
-      <h2>Aloo Parantha</h2>
-      <h3>
-        SNACKS | NORTH INDIAN
-      </h3>
+      <img src={{this.url}} alt="image">
+      <h2> {{this.name}} </h2>
+      <h3> {{this.category}} </h3>
       <div class="content">
         <div class="faded_detail">
-          <p>30$ for one</p>
+          <p> {{this.price}} Rs </p>
         </div>
         <div class="star">
-          <p>4.5 <span id="🎇">&#9733</span></p>
+          <p> {{this.rating}} <span id="star">&#9733</span></p>
         </div>
         <div class="faded_detail">
-          <p>10mins</p>
+          <p> {{this.time}} mins</p>
         </div>
       </div>
       <div class="discount">
-        <p>5% OFF</p>
+        <p> {{this.discount}}% OFF</p>
       </div>
       <button>
+        {{#if user}}
+        <a href="">Order Now</a>
+        {{else}}
         <a href="/login">Order Now</a>
+        {{/if}}
       </button>
     </div>
-    <div class="card">
-      <img src="/images/food2.jpg" alt="image" />
-      <h2>Veg Thali</h2>
-      <h3>
-        INDIAN FOOD | NORTH INDIAN
-      </h3>
-      <div class="content">
-        <div class="faded_detail">
-          <p>50$ for one</p>
-        </div>
-        <div class="star">
-          <p>4.8 <span id="🎇">&#9733</span></p>
-        </div>
-        <div class="faded_detail">
-          <p>30mins</p>
-        </div>
-      </div>
-      <div class="discount">
-        <p>20% OFF</p>
-      </div>
-      <button>
-        <a href="/login">Order Now</a>
-      </button>
-    </div>
-    <div class="card">
-      <img src="/images/food3.jpg" alt="image" />
-      <h2>Fried Rice</h2>
-      <h3>
-        SNACKS | NORTH INDIAN
-      </h3>
-      <div class="content">
-        <div class="faded_detail">
-          <p>40$ for one</p>
-        </div>
-        <div class="star">
-          <p>4.6 <span id="🎇">&#9733</span></p>
-        </div>
-        <div class="faded_detail">
-          <p>30mins</p>
-        </div>
-      </div>
-      <div class="discount">
-        <p>10% OFF</p>
-      </div>
-      <button>
-        <a href="/login">Order Now</a>
-      </button>
-    </div>
-    <div class="card">
-      <img src="/images/food4.jpg" alt="image" />
-      <h2>Omlette</h2>
-      <h3>
-        SNACKS | NORTH INDIAN
-      </h3>
-      <div class="content">
-        <div class="faded_detail">
-          <p>60$ for one</p>
-        </div>
-        <div class="star">
-          <p>4.3 <span id="🎇">&#9733</span></p>
-        </div>
-        <div class="faded_detail">
-          <p>50mins</p>
-        </div>
-      </div>
-      <div class="discount">
-        <p>5% OFF</p>
-      </div>
-      <button>
-        <a href="/login">Order Now</a>
-      </button>
-    </div>
-    <div class="card">
-      <img src="/images/food5.jpg" alt="image" />
-      <h2>Spring Roll</h2>
-      <h3>
-        FAST FOOD | NORTH INDIAN
-      </h3>
-      <div class="content">
-        <div class="faded_detail">
-          <p>50$ for one</p>
-        </div>
-        <div class="star">
-          <p>4.0 <span id="🎇">&#9733</span></p>
-        </div>
-        <div class="faded_detail">
-          <p>50mins</p>
-        </div>
-      </div>
-      <div class="discount">
-        <p>30% OFF</p>
-      </div>
-      <button>
-        <a href="/login">Order Now</a>
-      </button>
-    </div>
-    <div class="card">
-      <img src="/images/food6.jpg" alt="image" />
-      <h2>Momos</h2>
-      <h3>
-        FAST FOOD | EAST INDIAN
-      </h3>
-      <div class="content">
-        <div class="faded_detail">
-          <p>60$ for one</p>
-        </div>
-        <div class="star">
-          <p>4.8 <span id="🎇">&#9733</span></p>
-        </div>
-        <div class="faded_detail">
-          <p>40mins</p>
-        </div>
-      </div>
-      <div class="discount">
-        <p>10% OFF</p>
-      </div>
-      <button>
-        <a href="/login">Order Now</a>
-      </button>
-    </div>
+    {{/each}}
+    {{else}}
+    <h1 style="color: red;"> No food found </h1>
+    {{/if}}
   </div>
 
   <!-- About Us -->

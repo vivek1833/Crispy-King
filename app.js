@@ -7,19 +7,12 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 const auth = require("./middleware/auth");
-
+const Register = require('./models/register');
+const Food = require('./models/food')
+const { title } = require("process");
 const app = express();
 const port = process.env.PORT || 8000;
-
-const Register = require('./models/register');
-// const { title } = require("process");   // dont know what it does
 const conn = process.env.DataBase;
-
-mongoose.set('strictQuery', false); // to not show warning
-
-mongoose.connect(conn).then(() => {
-  console.log("Database Connection Succesful");
-}).catch((err) => console.log(`Database Connection Failed ...${err}`));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -29,35 +22,21 @@ app.set("views", path.join(__dirname, "./templates/views/"));
 hbs.registerPartials(path.join(__dirname, "./templates/partials/"));
 app.use(cookieParser());
 
-app.get("", (req, res) => {
-  res.render("index", { title: "Login Successful" });
-});
+mongoose.set('strictQuery', false); // to not show warning
 
-app.get("/order", auth, (req, res) => {
-  res.render("logged_index");
-});
+mongoose.connect(conn, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+}).then(() => {
+  console.log("Database Connected");
+}).catch((err) => console.log(err));
 
-app.get("/logout", auth, async (req, res) => {
-  try {
-    // logout from one device
-    req.user.tokens = req.user.tokens.filter((currentElement) => {
-      return currentElement.token !== req.token;
-    })
-    res.clearCookie("jwt");
-    console.log("Logout Successful");
-    await req.user.save();
-    res.render("index");
+app.get("/", async (req, res) => {
+  const foods = await Food.find();
 
-    // // logout from all devices
-    // req.user.tokens = [];
-    // res.clearCookie("jwt");
-    // console.log("Logout Successful");
-    // await req.user.save();
-    // res.render("index");
-
-  } catch (error) {
-    res.status(500).send(error);
-  }
+  res.render("index", {
+    food: foods
+  });
 });
 
 app.get("/login", (req, res) => {
@@ -67,6 +46,31 @@ app.get("/login", (req, res) => {
 app.get("/signup", (req, res) => {
   res.render("signup");
 });
+
+// Search Bar
+app.post("/search", async (req, res) => {
+  try {
+    const search = req.body.search;
+    const foods = await Food.find({ name: { $regex: search, $options: 'i' } });
+    res.render("index", {
+      food: foods
+    });
+  } catch (error) {
+    res.status(400).send("No item found");
+  }
+})
+
+// Logout user
+app.get("/logout", async (req, res) => {
+  try {
+    res.clearCookie("jwt");
+    console.log("Logout Successful");
+    res.render("login", { title: "Logout Successful" });
+
+  } catch (error) {
+    res.status(500).render("login", { title: "Logout Failed" });
+  }
+})
 
 // Register validation
 app.post("/register", async (req, res) => {
@@ -95,13 +99,14 @@ app.post("/register", async (req, res) => {
 
       // Cookie generation
       res.cookie("jwt", token, {
-        expires: new Date(Date.now() + 300000),
+        expires: new Date(Date.now() + 3 * 60 * 60),
         httpOnly: true
       });
 
+      // Saving in database
       const registered = await user.save();
       console.log("User Registered");
-      res.status(201).render("logged_index");
+      res.status(201).render("index", { title: "LogOut" });
 
     } else {
       res.render("signup", { title: "Password not matching" });
@@ -129,18 +134,27 @@ app.post("/login", async (req, res) => {
 
       // Cookie generation
       res.cookie("jwt", token, {
-        expires: new Date(Date.now() + 300000),
+        expires: new Date(Date.now() + 3 * 60 * 60),
         httpOnly: true
       });
+      // Saving in database
+      const loggedin = await useremail.save();
+
       console.log("User Logged In");
-      res.status(201).render("logged_index");
+      const foods = await Food.find();
+      res.status(201).render("index", { user: useremail, food: foods });
 
     } else {
       res.status(400).render("login", { title: "Invalid Credentials" });
     }
   } catch (error) {
-    res.status(400).render(`login ${error}`);
+    res.status(400).render("login", { title: "Invalid Credentials!!!" });
   }
+})
+
+// 404 Error Page
+app.get("*", (req, res) => {
+  res.render("404error");
 })
 
 // npm run dev
