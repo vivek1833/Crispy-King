@@ -104,12 +104,8 @@ app.post("/register", async (req, res) => {
 
       // Saving in database
       const registered = await user.save();
-      const search = req.body.search;
-      const foods = await Food.find({ name: { $regex: search, $options: 'i' } });
-      res.render("index", {
-        food: foods
-      });
-      res.status(201).render("login", { title: "Registered Successfully" });
+      const foods = await Food.find();
+      res.render("index", { user: registered, food: foods });
 
     } else {
       res.render("signup", { title: "Password not matching" });
