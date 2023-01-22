@@ -64,7 +64,6 @@ app.post("/search", async (req, res) => {
 app.get("/logout", async (req, res) => {
   try {
     res.clearCookie("jwt");
-    console.log("Logout Successful");
     res.render("login", { title: "Logout Successful" });
 
   } catch (error) {
@@ -105,8 +104,12 @@ app.post("/register", async (req, res) => {
 
       // Saving in database
       const registered = await user.save();
-      console.log("User Registered");
-      res.status(201).render("index", { title: "LogOut" });
+      const search = req.body.search;
+      const foods = await Food.find({ name: { $regex: search, $options: 'i' } });
+      res.render("index", {
+        food: foods
+      });
+      res.status(201).render("index", { user: registered, food: foods });
 
     } else {
       res.render("signup", { title: "Password not matching" });
@@ -140,7 +143,6 @@ app.post("/login", async (req, res) => {
       // Saving in database
       const loggedin = await useremail.save();
 
-      console.log("User Logged In");
       const foods = await Food.find();
       res.status(201).render("index", { user: useremail, food: foods });
 
