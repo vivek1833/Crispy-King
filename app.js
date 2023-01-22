@@ -109,7 +109,7 @@ app.post("/register", async (req, res) => {
       res.render("index", {
         food: foods
       });
-      res.status(201).render("index", { user: registered, food: foods });
+      res.status(201).render("login", { title: "Registered Successfully" });
 
     } else {
       res.render("signup", { title: "Password not matching" });
