@@ -53,6 +53,7 @@ app.post("/search", async (req, res) => {
     const search = req.body.search;
     const foods = await Food.find({ name: { $regex: search, $options: 'i' } });
     res.render("index", {
+      user: "user",
       food: foods
     });
   } catch (error) {
