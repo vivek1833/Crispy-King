@@ -8,7 +8,8 @@ const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 const auth = require("./middleware/auth");
 const Register = require('./models/register');
-const Food = require('./models/food')
+const Food = require('./models/food');
+const Cart = require('./models/cart');
 const { title } = require("process");
 const app = express();
 const port = process.env.PORT || 8000;
@@ -33,10 +34,13 @@ mongoose.connect(conn, {
 
 app.get("/", async (req, res) => {
   const foods = await Food.find();
+  const user = await Register.findOne({ token: req.cookies.jwt });
 
-  res.render("index", {
-    food: foods
-  });
+  if (user) {
+    res.render("index", { user: user, food: foods });
+  } else {
+    res.render("index", { user: null, food: foods });
+  }
 });
 
 app.get("/login", (req, res) => {
@@ -45,6 +49,57 @@ app.get("/login", (req, res) => {
 
 app.get("/signup", (req, res) => {
   res.render("signup");
+});
+
+// Cart
+app.get("/cart", auth, async (req, res) => {
+  try {
+    const user = await Cart.find({ username: req.user.username });
+    const cart = [];
+
+    for (let i = 0; i < user.length; i++) {
+      const food = await Food.findOne({ _id: user[i].food });
+      cart.push(food);
+    }
+
+    res.render("cart", {
+      user: req.user,
+      cart: cart
+    });
+  } catch (error) {
+    res.status(400).render("cart", {
+      user: user,
+      cart: "No item in cart"
+    });
+  }
+});
+
+// Add to cart
+app.get("/addtocart/:id", auth, async (req, res) => {
+  try {
+    const food = await Food.findOne({ _id: req.params.id });
+    const cart = new Cart({
+      username: req.user.username,
+      food: req.params.id
+    });
+
+    const added = await cart.save();
+    res.redirect("/");
+  } catch (error) {
+    res.render("login", { title: "Please login to add to cart" });
+  }
+});
+
+// Delete from cart
+app.get("/deletecart/:id", auth, async (req, res) => {
+  try {
+    const food = await Food.findOne({ _id: req.params.id });
+    const cart = await Cart.findOne({ food: req.params.id });
+    const deleted = await cart.remove();
+    res.redirect("/cart");
+  } catch (error) {
+    res.status(400).send("Something went wrong");
+  }
 });
 
 // Search Bar
@@ -62,9 +117,11 @@ app.post("/search", async (req, res) => {
 })
 
 // Logout user
-app.get("/logout", async (req, res) => {
+app.get("/logout", auth, async (req, res) => {
   try {
     res.clearCookie("jwt");
+    const user = await Register.findOne({ token: req.cookies.jwt });
+    user.token = "";
     res.render("login", { title: "Logout Successful" });
 
   } catch (error) {
@@ -95,19 +152,12 @@ app.post("/register", async (req, res) => {
 
       // Web token generation
       const token = jwt.sign({ _id: req.body._id }, process.env.SecretKey);
-      user.tokens = user.tokens.concat({ token: token });
-
-      // Cookie generation
-      res.cookie("jwt", token, {
-        expires: new Date(Date.now() + 3 * 60 * 60),
-        httpOnly: true
-      });
+      user.token = token;
 
       // Saving in database
       const registered = await user.save();
       const foods = await Food.find();
-      res.render("index", { user: registered, food: foods });
-
+      res.render("index", { user: registered, food: foods, token: token });
     } else {
       res.render("signup", { title: "Password not matching" });
     }
@@ -129,19 +179,20 @@ app.post("/login", async (req, res) => {
     if (isMatch) {
       // Web token generation
       const token = jwt.sign({ _id: req.body._id }, process.env.SecretKey);
-      useremail.tokens = useremail.tokens.concat({ token: token });
-      // console.log(token);
+      useremail.token = token;
 
-      // Cookie generation
-      res.cookie("jwt", token, {
-        expires: new Date(Date.now() + 3 * 60 * 60),
-        httpOnly: true
-      });
       // Saving in database
       const loggedin = await useremail.save();
 
+      // Cookies
+      res.cookie("jwt", token, {
+        // expires after 1 day
+        expires: new Date(Date.now() + 86400000),
+        httpOnly: true
+      });
+
       const foods = await Food.find();
-      res.status(201).render("index", { user: useremail, food: foods });
+      res.status(201).render("index", { user: useremail, food: foods, token: token });
 
     } else {
       res.status(400).render("login", { title: "Invalid Credentials" });

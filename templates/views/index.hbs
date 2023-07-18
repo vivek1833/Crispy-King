@@ -15,16 +15,19 @@
       <li><a href="#about">About</a></li>
       <li><a href="#contact">Conact Us</a></li>
       {{#if user}}
-      <li><a href="/logout">LogOut</a></li>
+      <li><a href="/cart">Cart</a></li>
+      <li><a href="/logout">Logout</a></li>
       {{else}}
-      <li><a href="/login">LogIn</a></li>
+      <li><a href="/login">Login</a></li>
       {{/if}}
-      <div>
       </div>
     </ul>
 
     <h1> <i> Crispy King </i> </h1>
     <h2>Discover the best food & drinks in Mamupur</h2>
+    {{#if user}}
+    <h2>Welcomes {{user.name}} </h2>
+    {{/if}}
     <form class="searchbox" action="/search" method="post">
       <input style="border: none" type="text" placeholder="Search for your favourite food" name="search"
         autocomplete="off">
@@ -53,45 +56,45 @@
       <div class="discount">
         <p> {{this.discount}}% OFF</p>
       </div>
+
       <button>
-        {{#if user}}
-        <a href="">Order Now</a>
-        {{else}}
-        <a href="/login">Order Now</a>
-        {{/if}}
+        <a href="/addtocart/{{this._id}}">Order Now</a>
       </button>
+
     </div>
     {{/each}}
     {{else}}
-    <h1 style="color: red;"> No food found </h1>
+    <h1 style="color: red;"> No match found </h1>
     {{/if}}
-  </div>
 
-  <!-- About Us -->
-  <h1 id="about" class="heading">ABOUT US</h1>
-  <div class="person">
-    <div class="overlay">
-      <img src="/images/person1.jpg" alt="">
-      <div class="text">
-        Vivek is the founder and CEO of Crispy King. Butter chicken with naan is his greatest weakness and his favourite
-        words are focus and now.
+    <!-- About Us -->
+    <h1 id="about" class="heading">ABOUT US</h1>
+    <div class="person">
+      <div class="overlay">
+        <img src="/images/person1.jpg" alt="">
+        <div class="text">
+          Vivek is the founder and CEO of Crispy King. Butter chicken with naan is his greatest weakness and his
+          favourite
+          words are focus and now.
+        </div>
+      </div>
+      <div class="overlay">
+        <img src="/images/person3.jpg" alt="" />
+        <div class="text">
+          Surobhi is part of the customer experience team at Crispy King. She loves discovering coffee and food
+          cultures
+          through her travels.
+        </div>
+      </div>
+      <div class="overlay">
+        <img src="/images/person2.jpg" alt="">
+        <div class="text">
+          Akshant is the CFO of Crispy King. He likes to eat alone - says he likes to eat his food in peace, and is
+          known
+          to go for long walks alone.
+        </div>
       </div>
     </div>
-    <div class="overlay">
-      <img src="/images/person3.jpg" alt="" />
-      <div class="text">
-        Surobhi is part of the customer experience team at Crispy King. She loves discovering coffee and food cultures
-        through her travels.
-      </div>
-    </div>
-    <div class="overlay">
-      <img src="/images/person2.jpg" alt="">
-      <div class="text">
-        Akshant is the CFO of Crispy King. He likes to eat alone - says he likes to eat his food in peace, and is known
-        to go for long walks alone.
-      </div>
-    </div>
-  </div>
 </body>
 
 <!-- footer -->

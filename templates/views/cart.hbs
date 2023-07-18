@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{{>header}}
+
+<body>
+    <!-- navbar -->
+    <nav>
+        <input type="checkbox" id="check">
+        <label for="check" class="checkbtn">
+            <i class="fas fa-bars"></i>
+        </label>
+        <ul>
+            <li><a href="/">Home</a></li>
+            {{#if user}}
+            <li><a href="/logout">Logout</a></li>
+            {{else}}
+            <li><a href="/login">Login</a></li>
+            {{/if}}
+            </div>
+        </ul>
+        <h1> <i> Crispy King </i> </h1>
+        <h2>Welcomes {{user.name}} </h2>
+        <h2>Here is your Cart</h2>
+    </nav>
+
+    <!-- cards -->
+    <!-- cards -->
+    <div class="cards">
+        {{#if cart}}
+        {{#each cart}}
+        <div class="card">
+            <img src={{this.url}} alt="image">
+            <h2> {{this.name}} </h2>
+            <h3> {{this.category}} </h3>
+            <div class="content">
+                <div class="faded_detail">
+                    <p> {{this.price}} Rs </p>
+                </div>
+                <div class="star">
+                    <p> {{this.rating}} <span id="star">&#9733</span></p>
+                </div>
+                <div class="faded_detail">
+                    <p> {{this.time}} mins</p>
+                </div>
+            </div>
+            <div class="discount">
+                <p> {{this.discount}}% OFF</p>
+            </div>
+            <Button class="btn btn-primary cursor-pointer">
+                <a href="/deletecart/{{this._id}}">
+                    Remove from cart
+                </a>
+            </Button>
+            {{/each}}
+            {{else}}
+            <h1 style="color: red;"> No Items in {{user.name}}'s Cart </h1>
+            {{/if}}
+        </div>
+</body>
+{{>footer}}
+
+</html>

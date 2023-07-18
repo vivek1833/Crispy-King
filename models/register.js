@@ -30,12 +30,9 @@ const regSchema = new mongoose.Schema({
     "confirmpassword": {
         type: String,
     },
-    "tokens": [{
-        token: {
-            type: String,
-            required: true
-        }
-    }]
+    "token": {
+        type: String,
+    }
 })
 
 const Register = new mongoose.model("newuser", regSchema);
