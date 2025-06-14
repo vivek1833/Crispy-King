@@ -312,7 +312,7 @@ input[placeholder] {
 .overlay {
   position: relative;
   border-radius: 1.2rem;
-  margin-top: 3rem;
+  margin: 3rem;
 
   display: flex;
   flex-wrap: wrap;
